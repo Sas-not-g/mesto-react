@@ -8,51 +8,50 @@ import ImagePopup from './ImagePopup.js';
 
 function App() {
   function handleEditAvatarClick() {
-    toggleEditAvatarPopup(true);
+    setEditAvatarPopup(true);
   }
 
   function handleEditProfileClick() {
-    toggleEditProfilePopup(true);
+    setEditProfilePopup(true);
   }
 
   function handleAddPlaceClick() {
-    toggleAddPlacePopup(true);
+    setAddPlacePopup(true);
   }
 
-  function handleCardImageClick(card) {
-    toggleImagePopup(true);
-    handleCardClick(card);
+  function handleCardClick(card) {
+    setSelectedCard(card);
   }
 
   function closeAllPopups() {
-    toggleAddPlacePopup(false);
-    toggleEditAvatarPopup(false);
-    toggleEditProfilePopup(false);
-    toggleImagePopup(false);
+    setAddPlacePopup(false);
+    setEditAvatarPopup(false);
+    setEditProfilePopup(false);
+    setSelectedCard({ name: '', link: '' });
   }
 
-  const [isEditProfilePopupOpen, toggleEditProfilePopup] = React.useState(false);
-  const [isAddPlacePopupOpen, toggleAddPlacePopup] = React.useState(false);
-  const [isEditAvatarPopupOpen, toggleEditAvatarPopup] = React.useState(false);
-  const [isImagePopupOpen, toggleImagePopup] = React.useState(false);
+  const [IsEditProfilePopupOpen, setEditProfilePopup] = React.useState(false);
+  const [IsAddPlacePopupOpen, setAddPlacePopup] = React.useState(false);
+  const [IsEditAvatarPopupOpen, setEditAvatarPopup] = React.useState(false);
 
-  const [selectedCard, handleCardClick] = React.useState();
+  const [SelectedCard, setSelectedCard] = React.useState({ name: '', link: '' });
 
   return (
-    <body className="root">
+    <div className="root">
       <Header />
       <Main
         onEditAvatar={handleEditAvatarClick}
         onAddPlace={handleAddPlaceClick}
         onEditProfile={handleEditProfileClick}
-        onCardClick={handleCardImageClick}
+        onCardClick={handleCardClick}
       />
       <Footer />
       <PopupWithForm
         title="Редактировать профиль"
         name="edit-user"
-        isOpen={isEditProfilePopupOpen}
+        isOpen={IsEditProfilePopupOpen}
         onClose={closeAllPopups}
+        buttonText="Сохранить"
       >
         <label className="popup__form-field">
           <input
@@ -82,8 +81,9 @@ function App() {
       <PopupWithForm
         title="Новое место"
         name="place-info"
-        isOpen={isAddPlacePopupOpen}
+        isOpen={IsAddPlacePopupOpen}
         onClose={closeAllPopups}
+        buttonText="Создать"
       >
         <label className="popup__form-field">
           <input
@@ -111,8 +111,9 @@ function App() {
       <PopupWithForm
         title="Обновить аватар"
         name="avatar"
-        isOpen={isEditAvatarPopupOpen}
+        isOpen={IsEditAvatarPopupOpen}
         onClose={closeAllPopups}
+        buttonText="Сохранить"
       >
         <label className="popup__form-field">
           <input
@@ -125,22 +126,14 @@ function App() {
           <span className="popup__form-input-error avatarLink-error"></span>
         </label>
       </PopupWithForm>
-      <PopupWithForm title="Вы уверены?" name="delete-card" onClose={closeAllPopups} />
-      <ImagePopup card={selectedCard} isOpen={isImagePopupOpen} onClose={closeAllPopups} />
-      <template className="cardTemplate">
-        <li className="photo-grid__element">
-          <button aria-label="Удалить" className="photo-grid__delete-button" type="button"></button>
-          <img className="photo-grid__picture" src="%" alt="%" />
-          <div className="photo-grid__description-bar">
-            <h2 className="photo-grid__description"></h2>
-            <div className="photo-grid__like-container">
-              <button className="photo-grid__like-button" type="button"></button>
-              <p className="photo-grid__like-counter">1</p>
-            </div>
-          </div>
-        </li>
-      </template>
-    </body>
+      <PopupWithForm
+        title="Вы уверены?"
+        name="delete-card"
+        onClose={closeAllPopups}
+        buttonText="Да"
+      />
+      <ImagePopup card={SelectedCard} onClose={closeAllPopups} />
+    </div>
   );
 }
 

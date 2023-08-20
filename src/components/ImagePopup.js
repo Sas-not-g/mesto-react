@@ -1,5 +1,5 @@
 export default function ImagePopup(props) {
-  if (props.isOpen) {
+  if (props.card.link != '') {
     return (
       <section className="popup popup_type_picture popup_opened">
         <div className="popup__container">
