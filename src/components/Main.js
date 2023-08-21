@@ -4,10 +4,10 @@ import api from '../utils/Api.js';
 import Card from './Card.js';
 
 export default function Main({ onEditAvatar, onAddPlace, onEditProfile, onCardClick }) {
-  const [UserName, setUserName] = React.useState('');
-  const [UserDescription, setUserDescription] = React.useState('');
-  const [UserAvatar, setUserAvatar] = React.useState('');
-  const [Cards, setCards] = React.useState([]);
+  const [userName, setUserName] = React.useState('');
+  const [userDescription, setUserDescription] = React.useState('');
+  const [userAvatar, setUserAvatar] = React.useState('');
+  const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
     Promise.all([api.getUserData(), api.getInitialCards()])
@@ -26,14 +26,14 @@ export default function Main({ onEditAvatar, onAddPlace, onEditProfile, onCardCl
     <main className="main">
       <section className="profile">
         <div className="profile__icon" onClick={onEditAvatar}>
-          <img className="profile__icon-image" src={UserAvatar} alt="аватар" />
+          <img className="profile__icon-image" src={userAvatar} alt="аватар" />
           <div className="profile__icon-overlay">
             <img clas="profile__hover-picture" src={editIcon} alt="Смена аватара" />
           </div>
         </div>
         <div className="profile__personal-data">
           <div className="profile__name-block">
-            <h1 className="profile__username">{UserName}</h1>
+            <h1 className="profile__username">{userName}</h1>
             <button
               aria-label="Редактировать профиль"
               className="profile__button profile__button_type_edit"
@@ -41,7 +41,7 @@ export default function Main({ onEditAvatar, onAddPlace, onEditProfile, onCardCl
               onClick={onEditProfile}
             ></button>
           </div>
-          <p className="profile__job">{UserDescription}</p>
+          <p className="profile__job">{userDescription}</p>
         </div>
         <button
           aria-label="Добавить карточку"
@@ -51,7 +51,7 @@ export default function Main({ onEditAvatar, onAddPlace, onEditProfile, onCardCl
         ></button>
       </section>
       <section className="posts">
-        <ul className="photo-grid">{Cards}</ul>
+        <ul className="photo-grid">{cards}</ul>
       </section>
     </main>
   );
