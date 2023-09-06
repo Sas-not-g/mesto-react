@@ -1,11 +1,30 @@
+import React from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+
 function Card(props) {
   function handleClick() {
     props.onCardClick(props.card);
   }
 
+  function handleLikeClick() {
+    props.onCardLike(props.card, currentUser);
+  }
+
+  function handleDeleteClick() {
+    props.onCardDelete(props.card);
+  }
+
+  const currentUser = React.useContext(CurrentUserContext);
+  const isOwn = props.card.owner._id === currentUser._id;
+  const isLiked = props.card.likes.some(i => i._id === currentUser._id);
+
+  const cardLikeButtonClassName = `photo-grid__like-button ${
+    isLiked && 'photo-grid__like-button_active'
+  }`;
+
   return (
     <li className="photo-grid__element">
-      <button aria-label="Удалить" className="photo-grid__delete-button" type="button"></button>
+      {isOwn && <button className="photo-grid__delete-button" onClick={handleDeleteClick} />}
       <img
         className="photo-grid__picture"
         src={props.card.link}
@@ -15,7 +34,11 @@ function Card(props) {
       <div className="photo-grid__description-bar">
         <h2 className="photo-grid__description">{props.card.name}</h2>
         <div className="photo-grid__like-container">
-          <button className="photo-grid__like-button" type="button"></button>
+          <button
+            className={cardLikeButtonClassName}
+            onClick={handleLikeClick}
+            type="button"
+          ></button>
           <p className="photo-grid__like-counter">{props.card.likes.length}</p>
         </div>
       </div>

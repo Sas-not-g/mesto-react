@@ -1,4 +1,12 @@
-export default function PopupWithForm({ title, name, isOpen, onClose, buttonText, children }) {
+export default function PopupWithForm({
+  title,
+  name,
+  isOpen,
+  onClose,
+  buttonText,
+  onSubmit,
+  children
+}) {
   return (
     <section className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}>
       <div className="popup__container">
@@ -10,7 +18,7 @@ export default function PopupWithForm({ title, name, isOpen, onClose, buttonText
             onClick={onClose}
           />
           <h2 className={`popup__heading popup__heading_type_${name}`}>{title}</h2>
-          <form className="popup__form" name={name}>
+          <form className="popup__form" name={name} onSubmit={onSubmit}>
             {children}
             <button className="popup__button popup__button_type_submit" type="submit">
               {buttonText}
