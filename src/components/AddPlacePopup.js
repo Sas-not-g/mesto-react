@@ -19,8 +19,12 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       name: placeName,
       link: placeLink
     });
-    onClose();
   }
+
+  React.useEffect(() => {
+    setPlaceName('');
+    setPlaceLink('');
+  }, [isOpen]);
 
   return (
     <PopupWithForm
@@ -35,6 +39,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
         <input
           type="text"
           name="placeName"
+          value={placeName || ''}
           onChange={handlePlaceNameChange}
           placeholder="Название"
           className="popup__input popup__input_type_place-name"
@@ -48,6 +53,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
         <input
           type="url"
           name="placeLink"
+          value={placeLink || ''}
           onChange={handlePlaceLinkChange}
           placeholder="Ссылка на картинку"
           className="popup__input popup__input_type_place-link"

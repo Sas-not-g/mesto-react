@@ -22,13 +22,12 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       name,
       about: description
     });
-    onClose();
   }
 
   React.useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, isOpen]);
 
   return (
     <PopupWithForm

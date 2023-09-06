@@ -57,6 +57,7 @@ function App() {
           _id: currentUser._id,
           cohort: currentUser.cohort
         });
+        closeAllPopups();
       })
       .catch(res => console.error(res));
   }
@@ -72,6 +73,7 @@ function App() {
           _id: currentUser._id,
           cohort: currentUser.cohort
         });
+        closeAllPopups();
       })
       .catch(res => console.error(res));
   }
@@ -81,6 +83,7 @@ function App() {
       .postNewCard(card)
       .then(res => {
         setCards([res, ...cards]);
+        closeAllPopups();
       })
       .catch(res => console.error(res));
   }
